@@ -1,0 +1,84 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-lg-11">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">{{'SCHEDULE.TITLE' | translate}}</h4>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-1">
+          <button type="button" class="btn btn-primary">Back</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-label>{{'SCHEDULE.TRANSACTIONNUMBER' | translate}}</mat-label>
+                  <input type="text" matInput [formControl]="enrollment_no" [matAutocomplete]="autoTran">
+                  <mat-autocomplete #autoTran="matAutocomplete" [displayWith]="displayFnTransactionNumber"
+                    (optionSelected)="getLicenseListPerEnroll()">
+                    <mat-option *ngFor="let option of tranNumberList | async" [value]="option">
+                      {{option.enrollment_no}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                    <div *ngIf="enrollment_no.hasError(validation.type)">
+                      {{validation.message}}
+                    </div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="showLicense">
+                <mat-form-field class="example-full-width mb-3 " appearance="outline">
+                  <mat-label>{{'SCHEDULE.LICENCE' | translate}}</mat-label>
+                  <input type="text" matInput [formControl]="license_type" [matAutocomplete]="autoTran">
+                  <mat-autocomplete #autoTran="matAutocomplete" [displayWith]="displayFnLicenseClass" (optionSelected)="checkPaymentInfo()">
+                  <mat-option *ngFor="let option of licenseTypeList | async" [value]="option">
+                      {{option.license_class}}
+                  </mat-option>
+                  </mat-autocomplete>
+                  <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                      <div *ngIf="enrollment_no.hasError(validation.type)">
+                        {{validation.message}}
+                      </div>
+                  </mat-error>
+        
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center;" *ngIf="scheduleStatus == 'Pay'">
+              <p style="text-align: center;">Please Make Payment for <b>{{upcomingStatus.status}}</b> to proceed further</p>
+              <button mat-raised-button color="primary" style="width:100%" *ngIf='showPaymentBtn' (click)="receipt()">{{'BUTTON.MakePayment' |
+                translate}}</button>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="calendarData.length == 0 && scheduleStatus == 'Success'">
+              <div class="panel-body" style="text-align: center;">
+                    <p>{{scheduleMessage}}</p>
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="calendarData.length == 0 && scheduleStatus == 'Waiting'">
+              <div class="panel-body" style="text-align: center;">
+                    <p>Waiting For {{waitingLicense}} Status!!. Please Update the {{waitingLicense}} Status</p>
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="calendarData.length > 0 && !showPaymentBtn">
+              <div class="panel-body">
+                <full-calendar [options]='calendarOptions'>
+                </full-calendar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="CCDataForm"></div>

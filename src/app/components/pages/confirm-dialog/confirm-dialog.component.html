@@ -1,0 +1,182 @@
+<div mat-dialog-title id="printable">
+    <div class="row" style="text-align: center;">
+        <div class="col-12">
+            <img src="assets/img/Amano_Original_Logo-Revised ver 1.00.png" class="col-6"
+                style="height: 100px;width: 200px;" alt="Logo">
+        </div>
+    </div>
+    <div class="row" style="text-align: center;">
+        <div class="col-12">
+            <p class="col-12">Payment Receipt</p>
+        </div>
+    </div>
+    <div class="row" style="line-height: 2.0;">
+        <div class="col-12">
+            <p style="color: black; font-size: 12px;text-align: center;">NO.66-G,JALAN JU 2,TAMAN JAYA UTAMA,TELOK
+                PANGLIMA GARANG,42500
+                <br /> TLK PANGLIMA GARANG SELANGOR
+                <br />info@smamano.my
+            </p>
+        </div>
+    </div>
+    <mat-dialog-content id="printable2">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;"> Name</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-size:small;font-weight: 600;"> {{data.name}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;"> Enrollment No</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-size:small;font-weight: 600;">{{enrollment_no}}</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;">E-mail</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-size:small;font-weight: 600;">{{data.email_id}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;">Contact No.</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-size:small;font-weight: 600;">{{data.mobile_number}}</span>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;"> License class</span>
+                </div>
+                <div class="col-6">
+                    <span [innerHTML]="licenseData" style="font-size:small;font-weight: 600;"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;"> Package</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-size:small;font-weight: 600;"> {{packDt.package_english}}</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;"> Package Offer</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-size:small;font-weight: 600;"> {{packDt.package_offers}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;">Amount</span>
+                </div>
+                <div class="col-6">
+                    <span style="font-size:small;font-weight: 600;"> ${{payInfo.payment_amount}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span style="font-size:large; font-weight: 500;">Payment Method</span>
+                </div>
+                <div class="col-4">
+                    <span style="font-size:small;font-weight: 600;"> {{payInfo.payment_method}}</span>
+                </div>
+            </div>
+            <!-- <table class="">
+                <tr>
+                    <td>
+                        Name :
+                    </td>
+                    <td>
+                        {{data.name}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Enrollment No :
+                    </td>
+                    <td>
+                        {{enrollment_no}}
+                    </td>
+                </tr>
+                <td>
+                    E-mail :
+                </td>
+                <td>
+                    {{data.email_id}}
+                </td>
+                <tr>
+                    <td>
+                        Contact Number :
+                    </td>
+                    <td>
+                        {{data.mobile_number}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        License class:
+                    </td>
+                    <td>
+                        <span [innerHTML]="licenseData"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Package:
+                    </td>
+                    <td>
+                        {{packDt.package_english}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Package Offer:
+                    </td>
+                    <td>
+                        {{packDt.package_offers}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Amount:
+                    </td>
+                    <td>
+                        ${{payInfo.payment_amount}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Payment Method:
+                    </td>
+                    <td>
+                        {{payInfo.payment_method}}
+                    </td>
+                </tr>
+
+                <tr></tr>
+            </table> -->
+        </div>
+
+    </mat-dialog-content>
+
+</div>
+<mat-dialog-actions>
+    <button mat-flat-button color="primary" (click)="print()">PRINT </button>
+</mat-dialog-actions>

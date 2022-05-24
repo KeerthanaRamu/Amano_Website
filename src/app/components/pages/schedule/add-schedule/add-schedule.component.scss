@@ -1,0 +1,28 @@
+
+// // overwrite the checkbox background
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background, 
+// .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color: black !important;
+// }
+
+// // overwrite the ripple overlay on hover and click
+// ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+//   background-color: black !important;
+// }
+
+
+@media (max-width: 767px) { .fc-toolbar .fc-left { float: none !important; display: flex; justify-content: center; margin-bottom: 1rem; } } @media (max-width: 767px) { .fc-toolbar .fc-right { float: none !important; display: flex; justify-content: center; margin-bottom: 1rem; } } @media (max-width: 767px) { .fc-scroller.fc-day-grid-container { overflow: unset !important; height: 100% !important; } } @media (max-width: 767px) { .fc-view-container { margin-bottom: 2rem; } } @media (max-width: 767px) { .fc-row.fc-rigid .fc-content-skeleton { position: relative !important; } }
+
+
+@media screen and (max-width: 400px){
+    .btn-primary{
+        margin-left: 298px;
+        margin-top: -26%;
+    }
+
+    }
+
+.btn
+{
+    background-color: #272b92;
+}
