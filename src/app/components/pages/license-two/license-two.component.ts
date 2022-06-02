@@ -44,7 +44,6 @@ export class LicenseTwoComponent implements OnInit {
   package: any;
   subscription;
   alive: boolean = true;
-  showGDLProcess:boolean=false;
   lan: boolean;
   imgSrc: Blob = null;
   existingLicList: Lookup[];
@@ -186,8 +185,6 @@ export class LicenseTwoComponent implements OnInit {
       existing_license_front_name: [{ value: undefined, disabled: false }, [FileValidator.maxContentSize(4194304)]],
       existing_license_rear_name: [{ value: undefined, disabled: false }, [FileValidator.maxContentSize(4194304)]],
       cdl_licence: new FormControl('0'),
-      gdlLicense:[false],
-      psvLicense:[false]
     })
   }
   get validate() {
@@ -222,26 +219,14 @@ export class LicenseTwoComponent implements OnInit {
     this.commonService.getLicenceListCustomer(this.licenseInfo2).subscribe(res => {
       if (res) {
         this.license = res;
-        if(this.licenseInfo.existingLicense_id == 3){
-          console.log("re----nric-----------",this.licenseInfo2.cdl_license);
-          if((this.studentInfo.nric_type == 1 || this.studentInfo.nric_type == 2) && this.studentInfo.age >= 21 && this.licenseFormGroup.get('cdl_licence').value == 1){
-            this.showGDLProcess=true;
-          }else{
-            this.base_license.patchValue('');
-            this.licenseFormGroup.patchValue({
-              gdlLicense:false,
-              psvLicense:false
-            })
-            this.showGDLProcess=false;
+          console.log("re----nric------this.license-----",this.license);
+          if(this.licenseInfo.existingLicense_id == 3 && this.licenseFormGroup.get('cdl_licence').value == 1){
+            if(!(this.studentInfo.nric_type == 1 || this.studentInfo.nric_type == 2)){
+              this.license = this.license.filter((elem)=>{
+                   return elem['gdl_license'] === 0 && elem['psv_license'] === 0;
+                })
+            }
           }
-        }else{
-            this.base_license.patchValue('');
-            this.licenseFormGroup.patchValue({
-              gdlLicense:false,
-              psvLicense:false
-            })
-            this.showGDLProcess=false;
-        }
       }
     })
   }
@@ -260,41 +245,14 @@ export class LicenseTwoComponent implements OnInit {
   }
 
   selectedExistingLicense(event){
+    this.base_license.setValue('');
+    this.license=[];
+    this.licenseFormGroup.get('cdl_licence').setValue('0')
     if(this.licenseInfo.existingLicense_id){
-      if(this.licenseInfo.existingLicense_id == 3){
-        console.log("studentInfo----------",this.studentInfo)
-        if((this.studentInfo.nric_type == 1 || this.studentInfo.nric_type == 2) && this.studentInfo.age >= 21 && this.licenseFormGroup.get('cdl_licence').value == 1){
-          this.showGDLProcess=true;
-        }else{
-          this.showGDLProcess=false;
-        }
-      }else{
-        this.showGDLProcess=false;
-      }
-    }
-    this.getLicenceListForCustomer();
-  }
-
-  onLicenseChangeGDL(event){
-    if(this.licenseFormGroup.value.gdlLicense == true){
-        this.licenseFormGroup.patchValue({
-          'psvLicense':false
-        })
-    }
-    if(this.licenseFormGroup.value.psvLicense == true){
-      this.licenseFormGroup.patchValue({
-        'gdlLicense':false
-      })
+      this.getLicenceListForCustomer();
     }
   }
 
-  onLicenseChangePSV(event){
-    if(this.licenseFormGroup.value.psvLicense == true){
-      this.licenseFormGroup.patchValue({
-        'gdlLicense':false
-      })
-    }
-  }
 
   viewPackageImage(packDt){
     packDt['packageStage']="Apply";
@@ -330,10 +288,8 @@ export class LicenseTwoComponent implements OnInit {
         formData.append('licenseInfo',JSON.stringify(licenseInfo));
         formData.append('existing_license_front', this.licenseFormGroup.get('existing_license_front').value);
         formData.append('existing_license_rear',this.licenseFormGroup.get('existing_license_rear').value);
-        formData.append('gdlLicense', this.licenseFormGroup.value.gdlLicense);
-        formData.append('psvLicense', this.licenseFormGroup.value.psvLicense);
-        
-          this.commonService.checkLicenseApplied(pack,this.licenseFormGroup.value.gdlLicense,this.licenseFormGroup.value.psvLicense).subscribe(res => {
+      
+          this.commonService.checkLicenseApplied(pack).subscribe(res => {
             if (res) {
               if(res.status == 'Success'){
                 this.commonService.setStudentPackageDetails(formData).subscribe(studres => {

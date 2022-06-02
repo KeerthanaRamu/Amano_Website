@@ -82,7 +82,7 @@
                           [ngClass]="statusdt.BColor ? 'bck-color' : ''">
                           <span>{{statusdt.status}}
 
-                            <i matTooltip="Make Payment" *ngIf="statusdt.id == 3 && !statusdt.showReceipt"
+                            <i matTooltip="Make Payment" *ngIf="(statusdt.id == 3 || statusdt.id == 19 || statusdt.id == 27) && !statusdt.showReceipt"
                               style="float: right;font-size: 30px;cursor: pointer;" class="bx bxs-dollar-circle"
                               (click)="makePayment(statusdt)"></i>
                             <i matTooltip="View Receipt" *ngIf="statusdt.showReceipt"
@@ -119,7 +119,7 @@
                                 {{licenseinfo[0].PSV_license_no}} </b>&nbsp;&nbsp; Expiry Date - <b>
                                 {{licenseinfo[0].PSV_expiry_date | date : 'dd-MM-yyyy'}}</b></span>
                             <span
-                              *ngIf="(statusdt.test_flag == 'T' || statusdt.test_flag == 'R') && statusdt.marks != null">
+                              *ngIf="(statusdt.test_flag == 'T' || statusdt.test_flag == 'TE' || statusdt.test_flag == 'PE' || statusdt.test_flag == 'R') && statusdt.marks != null">
                               Marks - <b> {{statusdt.marks}}</b></span>
 
                           </span>
@@ -161,7 +161,7 @@
         </mat-form-field>
       </div>
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2"
-        *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'R'">
+        *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'TE' || statusDetail.test_flag == 'PE' || statusDetail.test_flag == 'R'">
         <mat-label>Result</mat-label>
         <mat-radio-group formControlName="result">
           <mat-radio-button class="example-margin" value="Pass">
@@ -173,7 +173,7 @@
         </mat-radio-group>
       </div>
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2"
-        *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'R'">
+        *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'TE' || statusDetail.test_flag == 'PE' || statusDetail.test_flag == 'R'">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Marks</mat-label>
           <input matInput formControlName="marks">

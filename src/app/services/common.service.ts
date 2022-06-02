@@ -174,13 +174,11 @@ export class CommonService {
       );
   }
 
-  checkLicenseApplied(packDt,gdlLicense,psvLicense): Observable<any> {
+  checkLicenseApplied(packDt): Observable<any> {
     let dataUrl = `${this.apiUrl}onlineCustomer/checkLicenseApplied/`;
     return this.http
       .post<any>(dataUrl, {
-        packDt,
-        gdlLicense,
-        psvLicense
+        packDt
       })
       .pipe(
         map((res) => {

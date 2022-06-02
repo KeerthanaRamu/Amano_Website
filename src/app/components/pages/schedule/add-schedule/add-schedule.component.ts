@@ -393,7 +393,7 @@ export class AddScheduleComponent extends UnsubscribeOnDestroyAdapter implements
         }
         
       }, error => { }, () => { this.commonService.showLoader(false) });
-  }else{
+  }else if(enrollValue.license_process == 'GDL' || enrollValue.license_process == 'PSV'){
     this.calendarService.checkPaymentDoneForGDLProcess(this.SchData)
         .subscribe((res)=>{
           console.log("res----------",res);
@@ -407,6 +407,7 @@ export class AddScheduleComponent extends UnsubscribeOnDestroyAdapter implements
                 this.LicenseData.push(this.licenseinfo[i].license_class)
               }
               if(res['status'] == 'Success'){
+                this.showPaymentBtn=false;
                 if(this.upcomingStatus.id == 26 || this.upcomingStatus.id == 34){
                     this.scheduleStatus="Waiting";
                     this.waitingLicense=enrollValue.license_process;
@@ -416,12 +417,16 @@ export class AddScheduleComponent extends UnsubscribeOnDestroyAdapter implements
                 }
               }else if(res['status'] == 'Pay'){
                   this.scheduleStatus='Pay';
+                  this.showPaymentBtn=true;
+              }else if(res['status'] == 'Initial_Pay'){
+                this.scheduleStatus='';
+                this.commonService.showSnackBar("Please make Initial Payment!!")
               }else if(res['status'] == "Pay Not Found"){
                 this.commonService.showSnackBar("Retest Amount is not defined!!!")
               }else if(res['status'] == 'Completed'){
                   this.commonService.showSnackBar("Process Completed!!!")
               }
-        })
+        }, error => { }, () => { this.commonService.showLoader(false) })
   }
   }
 

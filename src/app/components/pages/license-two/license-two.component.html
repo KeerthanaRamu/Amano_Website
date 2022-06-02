@@ -109,14 +109,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-2" *ngIf="showGDLProcess">
-                    <mat-checkbox class="example-margin" formControlName="gdlLicense" (change)="onLicenseChangeGDL($event)">Apply GDL License</mat-checkbox>     
-                </div>
-                <div class="col-lg-2" *ngIf="showGDLProcess">
-                    <mat-checkbox class="example-margin" formControlName="psvLicense" (change)="onLicenseChangePSV($event)">Apply PSV License</mat-checkbox>     
-                </div>
-            </div>
+          
             <div class="row pt-20">
                 <div class="col-lg-4 col-md-6" *ngFor="let lic of license; let i = index;">
                     <div class="special-card">

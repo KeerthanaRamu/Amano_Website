@@ -262,7 +262,7 @@ export class TimelineComponent implements OnInit {
                 }
               }
             }
-          }else{
+          }else if(enrollValue.license_process == 'GDL' || enrollValue.license_process == 'PSV'){
             for(let i=0;i<this.statusList.length; i++){
               for(let j=0;j<this.statusDone.length;j++){
                 if(this.statusList[i].id == this.statusDone[j].status_id){
@@ -278,6 +278,7 @@ export class TimelineComponent implements OnInit {
                   this.statusList[i]['completed_date']=this.statusDone[j].completed_date;
                   if(this.statusDone[j].payInfo.length > 0){
                     this.statusList[i].showReceipt=true;
+                    this.statusList[i].payInfo=this.statusDone[j].payInfo[0]
                   }else{
                     this.statusList[i].showReceipt=false;
                   }
@@ -343,28 +344,6 @@ export class TimelineComponent implements OnInit {
                 }else{
                   this.timelineService.showSnackBar("PDL License is in Process..")
                 }
-              }else if(res['data'][0].id == 26){
-                if(expiryData[0].GDL_license_no != null){
-                  this.status_id=res['data'][0].id;
-                  this.statusDetail=res['data'][0];
-                  this.statusUpdateForm.patchValue({
-                    'status':res['data'][0].status
-                  })
-                  this.modalService.open(deleteRecord, { ariaLabelledBy: 'modal-basic-title' });
-                }else{
-                  this.timelineService.showSnackBar("GDL License is in Process..")
-                }
-              }else if(res['data'][0].id == 34){
-                if(expiryData[0].PSV_license_no != null){
-                  this.status_id=res['data'][0].id;
-                  this.statusDetail=res['data'][0];
-                  this.statusUpdateForm.patchValue({
-                    'status':res['data'][0].status
-                  })
-                  this.modalService.open(deleteRecord, { ariaLabelledBy: 'modal-basic-title' });
-                }else{
-                  this.timelineService.showSnackBar("PSV License is in Process..")
-                }
               }else{
                 this.status_id=res['data'][0].id;
                 this.statusDetail=res['data'][0];
@@ -392,36 +371,14 @@ export class TimelineComponent implements OnInit {
             this.timelineService.showSnackBar("Not Applicable")
           }
         })
-      }else{
+      }else if(this.license_type.value.license_process == 'GDL' || this.license_type.value.license_process == 'PSV'){
         this.timelineService.getStatusListForStudentOfGDL(this.license_type.value)
         .subscribe(res => {
           let expiryData=res['expiryData'];
           console.log("getStatusListForStudent===",statusdt.id,expiryData,res['data'])
           if(res['data'].length>0){
             if (statusdt.id == res['data'][0].id) {
-              if(res['data'][0].id == 7){
-                if(expiryData[0].LDL_license_no != null){
-                  this.status_id=res['data'][0].id;
-                  this.statusDetail=res['data'][0];
-                  this.statusUpdateForm.patchValue({
-                    'status':res['data'][0].status
-                  })
-                  this.modalService.open(deleteRecord, { ariaLabelledBy: 'modal-basic-title' });
-                }else{
-                  this.timelineService.showSnackBar("LDL License is in Process..")
-                }
-              }else if(res['data'][0].id == 15){
-                if(expiryData[0].PDL_license_no != null){
-                  this.status_id=res['data'][0].id;
-                  this.statusDetail=res['data'][0];
-                  this.statusUpdateForm.patchValue({
-                    'status':res['data'][0].status
-                  })
-                  this.modalService.open(deleteRecord, { ariaLabelledBy: 'modal-basic-title' });
-                }else{
-                  this.timelineService.showSnackBar("PDL License is in Process..")
-                }
-              }else if(res['data'][0].id == 26){
+               if(res['data'][0].id == 26){
                 if(expiryData[0].GDL_license_no != null){
                   this.status_id=res['data'][0].id;
                   this.statusDetail=res['data'][0];
